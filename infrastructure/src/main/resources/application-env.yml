@@ -1,0 +1,36 @@
+version: ${PROJECT_VERSION:0.0.0}
+environment: ${PROJECT_ENVIRONMENT:unknown}
+
+server:
+  port: ${SERVER_PORT:8081}
+  forward-headers-strategy: ${FORWARD_HEADERS_STRATEGY:framework}
+
+security:
+  cors:
+    pattern: ${CORS_PATTERN}
+    allowed-origins: ${CORS_ALLOWED_ORIGINS}
+    allowed-methods: ${CORS_ALLOWED_METHODS}
+    allowed-headers: ${CORS_ALLOWED_HEADERS}
+    allow-credentials: ${CORS_ALLOW_CREDENTIALS}
+
+keycloak:
+  realm: ${KEYCLOAK_REALM}
+  host: ${KEYCLOAK_HOST}
+
+mongodb:
+  host: ${MONGODB_HOST}
+  port: ${MONGODB_PORT}
+  database: ${MONGODB_DATABASE}
+  username: ${MONGODB_USER}
+  password: ${MONGODB_PASSWORD}
+
+db:
+  show-sql: ${DB_SHOW_SQL}
+
+rabbitmq:
+  virtual-host: ${RABBITMQ_VIRTUAL_HOST:/}
+  auto-create: ${RABBITMQ_AUTO_CREATE}
+  host: ${RABBITMQ_HOST}
+  port: ${RABBITMQ_PORT}
+  username: ${RABBITMQ_USERNAME}
+  password: ${RABBITMQ_PASSWORD}

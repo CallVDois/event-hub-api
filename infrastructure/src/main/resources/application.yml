@@ -1,0 +1,37 @@
+project:
+  name: "CallV2 Event Hub API"
+  version: ${version}
+  description: "Event Hub RestAPI [${environment:unknown}]"
+
+server:
+  port: ${SERVER_PORT}
+  forward-headers-strategy: framework
+  servlet:
+    context-path: /api
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/json
+    min-response-size: 1024
+
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:env}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${keycloak.host}/realms/${keycloak.realm}/protocol/openid-connect/certs
+          issuer-uri: ${keycloak.host}/realms/${keycloak.realm}
+  data:
+    mongodb:
+      host: ${mongodb.host}
+      port: ${mongodb.port}
+      database: ${mongodb.database}
+      username: ${mongodb.username}
+      password: ${mongodb.password}
+  rabbitmq:
+    dynamic: ${rabbitmq.auto-create}
+    host: ${rabbitmq.host}
+    port: ${rabbitmq.port}
+    username: ${rabbitmq.username}
+    password: ${rabbitmq.password}
