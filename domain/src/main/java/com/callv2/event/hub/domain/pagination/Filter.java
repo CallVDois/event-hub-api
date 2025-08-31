@@ -39,6 +39,7 @@ public record Filter(String field, String value, String valueToCompare, Type typ
 
         EQUALS,
         LIKE,
+        IN,
         BETWEEN;
 
         public static Optional<Type> of(final String type) {

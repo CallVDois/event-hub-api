@@ -9,6 +9,4 @@ public interface EventGateway {
 
     Page<Event> findAll(SearchQuery searchQuery);
 
-    Page<Event> findAllRelatedToEntity(EventEntity entity, final SearchQuery searchQuery);
-
 }
