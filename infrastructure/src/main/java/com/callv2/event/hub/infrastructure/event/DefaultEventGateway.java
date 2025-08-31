@@ -46,9 +46,8 @@ public class DefaultEventGateway implements EventGateway {
 
         final var pageable = QueryAdapter.of(searchQuery.pagination());
 
-        long total = mongoTemplate.count(query, EventMongoEntity.class);
-
-        List<EventMongoEntity> content = mongoTemplate.find(query.with(pageable), EventMongoEntity.class);
+        final long total = mongoTemplate.count(query, EventMongoEntity.class);
+        final List<EventMongoEntity> content = mongoTemplate.find(query.with(pageable), EventMongoEntity.class);
 
         final var pageResult = new PageImpl<>(content, pageable, total);
 
