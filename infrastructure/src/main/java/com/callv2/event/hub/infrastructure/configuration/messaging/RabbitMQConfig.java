@@ -21,9 +21,6 @@ public class RabbitMQConfig {
     private static final String EVENT_PUBLISHED_DLX_ROUTING_KEY = "eventhub.event.published.event.deadletter";
     private static final String EVENT_PUBLISHED_DLQ_QUEUE_NAME = "eventhub.event.published.queue.dlq";
 
-    // private static final String EVENT_HUB_ROUTING_KEY = "#";
-    // private static final String EVENT_HUB_DEAD_LETTER_ROUTING_KEY = "#";
-
     @Bean
     MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
