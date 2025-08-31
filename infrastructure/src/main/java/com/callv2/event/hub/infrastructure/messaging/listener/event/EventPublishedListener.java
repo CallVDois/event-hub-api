@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 
 import com.callv2.event.hub.application.event.register.RegisterEventUseCase;
 import com.callv2.event.hub.infrastructure.event.adapter.EventAdapter;
-import com.callv2.event.hub.infrastructure.event.model.RegisterEventMessage;
+import com.callv2.event.hub.infrastructure.event.model.EventPublishedMessage;
 import com.callv2.event.hub.infrastructure.messaging.listener.Listener;
 
 @Component
-public class EventPublishedListener implements Listener<RegisterEventMessage> {
+public class EventPublishedListener implements Listener<EventPublishedMessage> {
 
     private final RegisterEventUseCase registerEventUseCase;
 
@@ -18,9 +18,9 @@ public class EventPublishedListener implements Listener<RegisterEventMessage> {
     }
 
     @Override
-    @RabbitListener(queues = "event.hub.queue.teste")
-    public void handle(final RegisterEventMessage data) {
-        this.registerEventUseCase.execute(EventAdapter.adapt(data));
+    @RabbitListener(queues = "eventhub.event.published.queue")
+    public void handle(final EventPublishedMessage message) {
+        this.registerEventUseCase.execute(EventAdapter.adapt(message));
     }
 
 }

@@ -5,38 +5,28 @@ import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.core.TopicExchange;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.callv2.event.hub.infrastructure.event.model.RegisterEventMessage;
-import com.callv2.event.hub.infrastructure.messaging.producer.rabbitmq.RabbitMQProducer;
-
 @Configuration
 public class RabbitMQConfig {
 
-    private static final String EVENT_HUB_EXCHANGE_NAME = "event.hub.exchange";
-    private static final String EVENT_HUB_DLX_EXCHANGE_NAME = "event.hub.exchange.dlx";
+    private static final String EVENT_HUB_EXCHANGE_NAME = "eventhub.exchange";
+    private static final String EVENT_HUB_DLX_EXCHANGE_NAME = "eventhub.exchange.dlx";
 
-    private static final String EVENT_HUB_QUEUE_NAME = "event.hub.queue";
-    private static final String EVENT_HUB_DEAD_LETTER_QUEUE_NAME = "event.hub.queue.dlq";
+    private static final String EVENT_PUBLISHED_QUEUE_NAME = "eventhub.event.published.queue";
+    private static final String EVENT_PUBLISHED_ROUTING_KEY = "#.event";
+    private static final String EVENT_PUBLISHED_DLX_ROUTING_KEY = "eventhub.event.published.event.deadletter";
+    private static final String EVENT_PUBLISHED_DLQ_QUEUE_NAME = "eventhub.event.published.queue.dlq";
 
-    private static final String EVENT_HUB_ROUTING_KEY = "#";
-    private static final String EVENT_HUB_DEAD_LETTER_ROUTING_KEY = "#";
+    // private static final String EVENT_HUB_ROUTING_KEY = "#";
+    // private static final String EVENT_HUB_DEAD_LETTER_ROUTING_KEY = "#";
 
     @Bean
     MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
-    }
-
-    @Bean
-    RabbitMQProducer<RegisterEventMessage> memberCreatedProducer(final RabbitTemplate rabbitTemplate) {
-        return new RabbitMQProducer<>(
-                EVENT_HUB_EXCHANGE_NAME,
-                EVENT_HUB_ROUTING_KEY,
-                rabbitTemplate);
     }
 
     @Configuration
@@ -45,25 +35,25 @@ public class RabbitMQConfig {
         private final TopicExchange eventHubExchange = new TopicExchange(EVENT_HUB_EXCHANGE_NAME);
         private final TopicExchange eventHubDlxExchange = new TopicExchange(EVENT_HUB_DLX_EXCHANGE_NAME);
 
-        private final Queue eventHubQueue = QueueBuilder
-                .durable(EVENT_HUB_QUEUE_NAME)
+        private final Queue eventPublishedQueue = QueueBuilder
+                .durable(EVENT_PUBLISHED_QUEUE_NAME)
                 .deadLetterExchange(EVENT_HUB_DLX_EXCHANGE_NAME)
-                .deadLetterRoutingKey(EVENT_HUB_DEAD_LETTER_ROUTING_KEY)
+                .deadLetterRoutingKey(EVENT_PUBLISHED_DLX_ROUTING_KEY)
                 .build();
 
-        private final Queue eventHubDlxQueue = QueueBuilder
-                .durable(EVENT_HUB_DEAD_LETTER_QUEUE_NAME)
+        private final Queue eventPublishedDlqQueue = QueueBuilder
+                .durable(EVENT_PUBLISHED_DLQ_QUEUE_NAME)
                 .build();
 
-        private final Binding eventHubBinding = BindingBuilder
-                .bind(eventHubQueue)
+        private final Binding eventPublishedBinding = BindingBuilder
+                .bind(eventPublishedQueue)
                 .to(eventHubExchange)
-                .with(EVENT_HUB_ROUTING_KEY);
+                .with(EVENT_PUBLISHED_ROUTING_KEY);
 
-        private final Binding eventHubDeadLetterBinding = BindingBuilder
-                .bind(eventHubDlxQueue)
+        private final Binding eventPublishedDeadLetterBinding = BindingBuilder
+                .bind(eventPublishedDlqQueue)
                 .to(eventHubDlxExchange)
-                .with(EVENT_HUB_DEAD_LETTER_ROUTING_KEY);
+                .with(EVENT_PUBLISHED_DLX_ROUTING_KEY);
 
         @Bean
         TopicExchange eventExchange() {
@@ -76,23 +66,23 @@ public class RabbitMQConfig {
         }
 
         @Bean
-        Queue eventHubQueue() {
-            return eventHubQueue;
+        Queue eventPublishedQueue() {
+            return eventPublishedQueue;
         }
 
         @Bean
-        Queue eventHubDlxQueue() {
-            return eventHubDlxQueue;
+        Queue eventPublishedDlqQueue() {
+            return eventPublishedDlqQueue;
         }
 
         @Bean
         Binding eventPublishedBindings() {
-            return eventHubBinding;
+            return eventPublishedBinding;
         }
 
         @Bean
         Binding eventPublishedDeadLetterBinding() {
-            return eventHubDeadLetterBinding;
+            return eventPublishedDeadLetterBinding;
         }
 
     }

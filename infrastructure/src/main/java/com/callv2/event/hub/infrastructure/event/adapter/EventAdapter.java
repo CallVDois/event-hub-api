@@ -4,11 +4,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.callv2.event.hub.application.event.register.RegisterEventInput;
-import com.callv2.event.hub.infrastructure.event.model.RegisterEventMessage;
+import com.callv2.event.hub.infrastructure.event.model.EventPublishedMessage;
 
 public interface EventAdapter {
 
-    static RegisterEventInput adapt(final RegisterEventMessage message) {
+    static RegisterEventInput adapt(final EventPublishedMessage message) {
 
         final Set<RegisterEventInput.Entity> relatedEntities = message.relatedEntities() == null ? Set.of()
                 : message.relatedEntities().stream()

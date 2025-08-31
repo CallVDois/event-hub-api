@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.Set;
 
-public record RegisterEventMessage(
+public record EventPublishedMessage(
         String domain,
         String entity,
         String action,
@@ -14,5 +14,9 @@ public record RegisterEventMessage(
         Instant occurredAt,
         Set<EventEntity> relatedEntities,
         Map<String, Object> data) implements Serializable {
+
+    public record EventEntity(String type, String id) implements Serializable {
+
+    }
 
 }
