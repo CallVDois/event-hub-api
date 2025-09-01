@@ -33,8 +33,7 @@ public interface EventAdminAPI {
     ResponseEntity<GetEventResponse> getById(@PathVariable(name = "id") String id);
 
     @Operation(summary = "List events", description = "This method list events", security = @SecurityRequirement(name = "bearerAuth"))
-    @ApiResponse(responseCode = "200", description = "Events listed successfully", content = @Content(schema = @Schema(implementation = Page.class, subTypes = {
-            ListEventResponse.class })))
+    @ApiResponse(responseCode = "200", description = "Events listed successfully", content = @Content(schema = @Schema(implementation = Page.class)))
     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = ApiError.class)))
     @GetMapping
     ResponseEntity<Page<ListEventResponse>> list(
