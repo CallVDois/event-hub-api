@@ -30,6 +30,17 @@ spring:
       username: ${mongodb.username}
       password: ${mongodb.password}
   rabbitmq:
+    listener:
+      simple:
+        concurrency: 1
+        max-concurrency: 20
+        retry:
+          max-attempts: 10
+          enabled: true
+          initial-interval: 1000
+          max-interval: 20000
+          multiplier: 2
+        default-requeue-rejected: false
     dynamic: ${rabbitmq.auto-create}
     host: ${rabbitmq.host}
     port: ${rabbitmq.port}
