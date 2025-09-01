@@ -18,4 +18,9 @@ public class EventID extends Identifier<String> {
         return new EventID(id);
     }
 
+    @Override
+    public String getStringValue() {
+        return getValue();
+    }
+
 }

@@ -2,15 +2,15 @@ package com.callv2.event.hub.domain;
 
 import java.util.Objects;
 
-public abstract class Entity<ID extends Identifier<?>> implements Validatable {
+public abstract class Entity<I extends Identifier<?>> implements Validatable {
 
-    protected final ID id;
+    protected final I id;
 
-    protected Entity(final ID id) {
+    protected Entity(final I id) {
         this.id = Objects.requireNonNull(id, "'id' should not be null");
     }
 
-    public ID getId() {
+    public I getId() {
         return id;
     }
 

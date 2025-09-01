@@ -1,6 +1,7 @@
 package com.callv2.event.hub.infrastructure.event;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.callv2.event.hub.domain.event.Event;
 import com.callv2.event.hub.domain.event.EventGateway;
+import com.callv2.event.hub.domain.event.EventID;
 import com.callv2.event.hub.domain.pagination.Page;
 import com.callv2.event.hub.domain.pagination.SearchQuery;
 import com.callv2.event.hub.infrastructure.event.persistence.EventMongoEntity;
@@ -29,6 +31,13 @@ public class DefaultEventGateway implements EventGateway {
         this.eventRepository = eventRepository;
         this.mongoTemplate = mongoTemplate;
         this.filterService = filterService;
+    }
+
+    @Override
+    public Optional<Event> findById(final EventID id) {
+        return eventRepository
+                .findById(id.getStringValue())
+                .map(EventMongoEntity::toDomain);
     }
 
     @Override

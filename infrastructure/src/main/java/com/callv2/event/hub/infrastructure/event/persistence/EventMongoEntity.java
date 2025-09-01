@@ -31,6 +31,9 @@ public class EventMongoEntity {
     private Set<EventEntityMongo> relatedEntities;
     private Map<String, Object> data;
 
+    public EventMongoEntity() {
+    }
+
     public EventMongoEntity(
             String id,
             String domain,

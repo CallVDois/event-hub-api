@@ -51,10 +51,18 @@ public class FilterService {
     }
 
     private static Query orSpecifications(final List<Criteria> criterias) {
+
+        if (criterias.isEmpty())
+            return new Query();
+
         return new Query(new Criteria().orOperator(criterias));
     }
 
     private static Query andSpecifications(final List<Criteria> criterias) {
+
+        if (criterias.isEmpty())
+            return new Query();
+
         return new Query(new Criteria().andOperator(criterias));
     }
 

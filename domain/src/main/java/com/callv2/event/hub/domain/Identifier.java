@@ -17,6 +17,8 @@ public abstract class Identifier<T> implements ValueObject {
         return id;
     }
 
+    public abstract String getStringValue();
+
     @Override
     public void validate(ValidationHandler aHandler) {
         if (Objects.isNull(this.id))

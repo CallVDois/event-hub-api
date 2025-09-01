@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.callv2.event.hub.application.event.register.RegisterEventInput;
+import com.callv2.event.hub.application.event.retrieve.get.GetEventInput;
 import com.callv2.event.hub.infrastructure.event.model.EventPublishedMessage;
 
 public interface EventAdapter {
@@ -25,6 +26,10 @@ public interface EventAdapter {
                 relatedEntities,
                 message.data());
 
+    }
+
+    static GetEventInput adapt(final String id) {
+        return GetEventInput.from(id);
     }
 
 }

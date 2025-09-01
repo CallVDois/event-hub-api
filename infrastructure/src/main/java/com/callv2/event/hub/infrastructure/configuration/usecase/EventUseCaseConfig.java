@@ -5,6 +5,10 @@ import org.springframework.context.annotation.Configuration;
 
 import com.callv2.event.hub.application.event.register.DefaultRegisterEventUseCase;
 import com.callv2.event.hub.application.event.register.RegisterEventUseCase;
+import com.callv2.event.hub.application.event.retrieve.get.DefaultGetEventUseCase;
+import com.callv2.event.hub.application.event.retrieve.get.GetEventUseCase;
+import com.callv2.event.hub.application.event.retrieve.list.DefaultListEventUseCase;
+import com.callv2.event.hub.application.event.retrieve.list.ListEventUseCase;
 import com.callv2.event.hub.domain.event.EventGateway;
 
 @Configuration
@@ -19,6 +23,16 @@ public class EventUseCaseConfig {
     @Bean
     RegisterEventUseCase registerEventUseCase() {
         return new DefaultRegisterEventUseCase(eventGateway);
+    }
+
+    @Bean
+    GetEventUseCase getEventUseCase() {
+        return new DefaultGetEventUseCase(eventGateway);
+    }
+
+    @Bean
+    ListEventUseCase listEventUseCase() {
+        return new DefaultListEventUseCase(eventGateway);
     }
 
 }

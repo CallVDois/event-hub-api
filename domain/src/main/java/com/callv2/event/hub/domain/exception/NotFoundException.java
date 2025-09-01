@@ -3,6 +3,7 @@ package com.callv2.event.hub.domain.exception;
 import java.util.List;
 
 import com.callv2.event.hub.domain.Entity;
+import com.callv2.event.hub.domain.Identifier;
 
 public class NotFoundException extends SilentDomainException {
 
@@ -14,10 +15,10 @@ public class NotFoundException extends SilentDomainException {
                         .with("[%s] with id [%s] not found.".formatted(entityClass.getSimpleName(), id))));
     }
 
-    public static NotFoundException with(
-            final Class<? extends Entity<?>> entityClass,
-            final String id) {
-        return new NotFoundException(entityClass, id);
+    public static <E extends Entity<I>, I extends Identifier<?>> NotFoundException with(
+            final Class<E> entityClass,
+            final I id) {
+        return new NotFoundException(entityClass, id.getStringValue());
     }
 
 }
