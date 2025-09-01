@@ -40,7 +40,7 @@ public interface EventAdminAPI {
     ResponseEntity<Page<ListEventResponse>> list(
             @RequestParam(name = "page", required = false, defaultValue = "0") final int page,
             @RequestParam(name = "perPage", required = false, defaultValue = "10") final int perPage,
-            @RequestParam(name = "orderField", required = false, defaultValue = "createdAt") String orderField,
+            @RequestParam(name = "orderField", required = false, defaultValue = "ingestedAt") String orderField,
             @RequestParam(name = "orderDirection", required = false, defaultValue = "DESC") Pagination.Order.Direction orderDirection,
             @RequestParam(name = "filterOperator", required = false, defaultValue = "AND") Filter.Operator filterOperator,
             @RequestParam(name = "filters", required = false) List<String> filters);
