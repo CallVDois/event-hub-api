@@ -30,7 +30,7 @@ public record ListEventOutput(String id,
     public record EventEntity(String type, String id) {
 
         public static EventEntity from(final com.callv2.eventhub.domain.event.EventEntity eventEntity) {
-            return new EventEntity(eventEntity.type(), eventEntity.domain());
+            return new EventEntity(eventEntity.type(), eventEntity.id());
         }
 
         public static Set<EventEntity> from(final Set<com.callv2.eventhub.domain.event.EventEntity> eventEntities) {
