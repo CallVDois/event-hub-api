@@ -6,7 +6,7 @@ on:
 
 jobs:
   release-build-push:
-    uses: ./.github/workflows/build-and-push-docker-image.yml
+    uses: ./.github/workflows/build-and-push-docker-image.yaml
     with:
       imageName: eventhub-api
       imageTag: ${{ github.event.release.tag_name }}
