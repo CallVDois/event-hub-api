@@ -24,9 +24,6 @@ mongodb:
   username: ${MONGODB_USER}
   password: ${MONGODB_PASSWORD}
 
-db:
-  show-sql: ${DB_SHOW_SQL}
-
 rabbitmq:
   virtual-host: ${RABBITMQ_VIRTUAL_HOST:/}
   auto-create: ${RABBITMQ_AUTO_CREATE}
